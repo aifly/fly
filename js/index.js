@@ -1,4 +1,31 @@
-﻿var model = angular.module("myApp", ["ngRoute"]);
+﻿(function () { //用来做动画的。
+    var lastTime = 0;
+    var vendors = ['webkit', 'moz', 'ms'];
+    for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestNextAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+        window.cancelNextAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] ||    // Webkit中此取消方法的名字变了
+                                      window[vendors[x] + 'CancelRequestAnimationFrame'];
+    }
+    if (!window.requestNextAnimationFrame) {
+
+        window.requestNextAnimationFrame = function (callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16.7 - (currTime - lastTime));
+            var id = window.setTimeout(function () {
+                callback(currTime + timeToCall);
+            }, timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+    }
+    if (!window.cancelNextAnimationFrame) {
+        window.cancelNextAnimationFrame = function (id) {
+            clearTimeout(id);
+        };
+    }
+})();
+
+var model = angular.module("myApp", ["ngRoute"]);
 
 model.controller("myCtrl", ["$scope", "$location", function ($scope, $location) {
 
@@ -7,32 +34,7 @@ model.controller("myCtrl", ["$scope", "$location", function ($scope, $location) 
 angular.element(document).ready(function () {
     //angular.bootstrap(document, ["myApp"]);
 
-    (function () { //用来做动画的。
-        var lastTime = 0;
-        var vendors = ['webkit', 'moz', 'ms'];
-        for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-            window.requestNextAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
-            window.cancelNextAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] ||    // Webkit中此取消方法的名字变了
-                                          window[vendors[x] + 'CancelRequestAnimationFrame'];
-        }
-        if (!window.requestNextAnimationFrame) {
-
-            window.requestNextAnimationFrame = function (callback, element) {
-                var currTime = new Date().getTime();
-                var timeToCall = Math.max(0, 16.7 - (currTime - lastTime));
-                var id = window.setTimeout(function () {
-                    callback(currTime + timeToCall);
-                }, timeToCall);
-                lastTime = currTime + timeToCall;
-                return id;
-            };
-        }
-        if (!window.cancelNextAnimationFrame) {
-            window.cancelNextAnimationFrame = function (id) {
-                clearTimeout(id);
-            };
-        }
-    })();
+  
     !function () {
 
         var canvas = document.getElementById("logo");
@@ -86,7 +88,7 @@ angular.element(document).ready(function () {
             }
             setTimeout(function () {
                 canvas.click();
-            }, 2000);
+            }, 1000);
 
             var timer = null;
 
@@ -318,29 +320,29 @@ model.directive("flyHeaderTitle", ["$timeout", function ($timeout) {
                     aSpan.css("transition", "none");
                     ableMove = true;
                 });
-            }, 4000);
+            }, 3000);
 
             var aSpanWidth = aSpan.width(), aSpanHeight = aSpan.height();
-           
-            
+
+
             $(document).on("mousemove", function (e) {
                 if (ableMove) {
                     var x = e.clientX, y = e.clientY;
-                  
+
                     angular.forEach(aSpan, function (item) {
                         var disX = m.pow(($(item).offset().left + aSpanWidth / 2 - x), 2),
                           disY = m.pow(($(item).offset().top + aSpanHeight / 2 - y), 2);
-                        var dis =m.sqrt(disX + disY);
+                        var dis = m.sqrt(disX + disY);
                         if (dis < 200) {
                             $(item).css("transform", "translate3d(0," + (dis - 200) + "px,0)");
                         }
                         else {
                             $(item).css("transform", "none");
                         }
-                          
+
                     });
                 }
-                
+
 
             })
         }

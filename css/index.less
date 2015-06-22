@@ -76,7 +76,21 @@ html{height:100%;}
         background:-webkit-gradient(linear,0 100% ,100% 0,from(#275f25),to(#439741));
         overflow:hidden;
     }
-    .fly-header{
+
+    #fly-nav{
+        @width:200px;
+        width:@width;
+        height:@width;
+        .position(a);
+        left:0;
+        top:0;
+        border:1px solid #ccc;
+        z-index:2;
+        opacity:0;
+        border-radius:50%;
+    }
+  #main{
+        .fly-header{
         font-weight:bold;
         font-family:fzxjl;
         font-size:40px;
@@ -89,7 +103,7 @@ html{height:100%;}
             margin:0 auto;
             canvas{
                 .position(a);
-                z-index:0;
+                z-index:1;
             }
         }
         .fly-header-title{
@@ -107,3 +121,15 @@ html{height:100%;}
             }
         }
     }
+    #snow{
+        width:100%;
+        height:100%;
+        canvas{
+            .position(a);
+            z-index:0;
+            left:0;
+            top:0;
+        }
+    }
+  }
+
