@@ -312,15 +312,17 @@ model.directive("flyHeaderTitle", ["$timeout", function ($timeout) {
                 $(this).css("transform", "translate3d(" + (m.random() - .5) * width * (m.random() - .5 > 0 ? 2 : -2) + "px," + (m.random() - .5) * height * (m.random() - .5 > 0 ? 2 : -2) + "px,0)").css("transition-delay", 100 * i + "ms");
             });
             var ableMove = false;
-            $timeout(function () {
-                aSpan.each(function (i, item) {
-                    $(this).css("transform", "none").css("opacity", 1);
-                });
-                aSpan.eq(-1).off(transitionend).on(transitionend, function () {
-                    aSpan.css("transition", "none");
-                    ableMove = true;
-                });
-            }, 3000);
+            $(function () {
+                $timeout(function () {
+                    aSpan.each(function (i, item) {
+                        $(this).css("transform", "none").css("opacity", 1);
+                    });
+                    aSpan.eq(-1).off(transitionend).on(transitionend, function () {
+                        aSpan.css("transition", "none");
+                        ableMove = true;
+                    });
+                }, 3000);
+            });
 
             var aSpanWidth = aSpan.width(), aSpanHeight = aSpan.height();
 
