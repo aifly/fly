@@ -1,0 +1,81 @@
+﻿html,
+body,
+div,
+p,
+ul,
+li,
+ol,
+dl,
+dt,
+dd,
+header,
+footer,
+video,
+h1,
+h2,
+h3,
+h4,
+canvas,
+section,
+figure {
+  padding: 0;
+  margin: 0;
+}
+a {
+  text-decoration: none;
+}
+li {
+  list-style: none;
+}
+html {
+  height: 100%;
+}
+.transform3d {
+  -webkit-transform-style: preserve-3d;
+  -webkit-perspective: 800px;
+  transform-style: preserve-3d;
+  perspective: 800px;
+}
+@font-face {
+  font-family: "fzxjl";
+  src: url("../fonts/fzxjl.ttf") format("truetype");
+}
+body {
+  background: -webkit-gradient(linear, 0 100%, 100% 0, from(#275f25), to(#439741));
+  overflow: hidden;
+}
+.fly-header {
+  font-weight: bold;
+  font-family: fzxjl;
+  font-size: 40px;
+  color: #000;
+  width: 100%;
+  height: 120px;
+  position: relative;
+}
+.fly-header div {
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  margin: 0 auto;
+}
+.fly-header div canvas {
+  position: absolute;
+  z-index: 0;
+}
+.fly-header .fly-header-title {
+  position: absolute;
+  left: 500px;
+  top: 100px;
+  opacity: 0;
+}
+.fly-header .fly-header-title span {
+  display: inline-block;
+  opacity: 0;
+  color: #22e60c;
+  -webkit-transition: 2s;
+  transition: 2s;
+  -webkit-transition-timing-function: ease-in;
+  transition-timing-function: ease-in;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 0, 0, 0.8);
+}
+/*# sourceMappingURL=index.css.map */
