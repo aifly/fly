@@ -273,75 +273,7 @@ angular.element(document).ready(function () {
 
 model.run(["$rootScope", "$location", function ($rootScope, $location) {
     $rootScope.$on("$viewContentLoaded", function () {
-        switch ($location.path()) {
-            case "/index":
-
-                break;
-            case "/news":
-                break;
-            case "/html5":
-                !function (doc, m) {
-                    var aImg = []
-
-                    for (var i = 1; i <= 26; i++) {
-                        var src = "http://www.xinhuatone.com/zt/m/tpmb01/images/" + i + ".jpg";
-                        aImg.push(src);
-                    }
-                    loading(aImg, function () {
-
-                    })
-
-                    function loading(aImg, fn) {
-                        var canvas = doc.getElementById("canvas");//画布
-                        var context = canvas.getContext("2d");//画笔
-                        var x = y = r = 100;
-                        var len = aImg.length;
-                        var count = 0;
-                        loader();
-                        function loader() {
-                            var img = new Image();
-                            count++;
-                            img.onload = img.onerror = function () {
-
-                                if (count < len) {
-                                    loader();
-                                }
-                                else if (count / len === 1) {
-                                    fn && fn();
-                                }
-
-                                context.fillStyle = "#0f0";
-                                context.beginPath();
-                                context.clearRect(0, 0, canvas.width, canvas.height);
-                                context.arc(x, y, r, -.5 * m.PI, (count / len * 2 - .5) * m.PI, false);
-
-                                context.lineTo(x, y);
-                                context.closePath();
-                                context.fill();
-                                context.fillStyle = "#fff";
-                                context.beginPath();
-                                context.arc(x, y, r - 10, 0, 2 * m.PI, false);
-                                context.closePath();
-                                context.fill();
-                                context.fillStyle = "#000";
-                                context.font = "20px Georgia";
-                                var prec = parseInt(count / len * 100) + "%";
-                                context.fillText(prec, (r * 2 - context.measureText(prec).width) / 2, y);
-
-                            }
-
-                            img.src = aImg[count - 1];
-                        }
-
-                    }
-
-                }(document, Math);
-                break;
-            case "/css3":
-                break;
-            case "/js":
-                break;
-        }
+       
     });
 }]);
 model.config(["$routeProvider", function ($routeProvider) {
@@ -364,6 +296,7 @@ model.directive("flyHeaderTitle", ["$timeout", function ($timeout) {
     return {
         restrict: "A",
         link: function (scope, element, attr) {
+            var transitionend = "onwebkittransitionend" in window ? "webkitTransitionEnd" : "transitionend";
             var html = "";
             var arr = $(element).html().trim().split("");
             angular.forEach(arr, function (item) {
@@ -376,11 +309,40 @@ model.directive("flyHeaderTitle", ["$timeout", function ($timeout) {
             aSpan.each(function (i, item) {
                 $(this).css("transform", "translate3d(" + (m.random() - .5) * width * (m.random() - .5 > 0 ? 2 : -2) + "px," + (m.random() - .5) * height * (m.random() - .5 > 0 ? 2 : -2) + "px,0)").css("transition-delay", 100 * i + "ms");
             });
+            var ableMove = false;
             $timeout(function () {
                 aSpan.each(function (i, item) {
                     $(this).css("transform", "none").css("opacity", 1);
                 });
-            }, 4000)
+                aSpan.eq(-1).off(transitionend).on(transitionend, function () {
+                    aSpan.css("transition", "none");
+                    ableMove = true;
+                });
+            }, 4000);
+
+            var aSpanWidth = aSpan.width(), aSpanHeight = aSpan.height();
+           
+            
+            $(document).on("mousemove", function (e) {
+                if (ableMove) {
+                    var x = e.clientX, y = e.clientY;
+                  
+                    angular.forEach(aSpan, function (item) {
+                        var disX = m.pow(($(item).offset().left + aSpanWidth / 2 - x), 2),
+                          disY = m.pow(($(item).offset().top + aSpanHeight / 2 - y), 2);
+                        var dis =m.sqrt(disX + disY);
+                        if (dis < 200) {
+                            $(item).css("transform", "translate3d(0," + (dis - 200) + "px,0)");
+                        }
+                        else {
+                            $(item).css("transform", "none");
+                        }
+                          
+                    });
+                }
+                
+
+            })
         }
     }
 }])

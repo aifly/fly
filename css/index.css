@@ -72,10 +72,10 @@ body {
   display: inline-block;
   opacity: 0;
   color: #22e60c;
-  -webkit-transition: 2s;
-  transition: 2s;
-  -webkit-transition-timing-function: ease-in;
-  transition-timing-function: ease-in;
+  -webkit-transition: 1.5s;
+  transition: 1.5s;
+  -webkit-transition-timing-function: cubic-bezier(1, -0.025, 1, 0.865);
+  transition-timing-function: cubic-bezier(1, -0.025, 1, 0.865);
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 0, 0, 0.8);
 }
 /*# sourceMappingURL=index.css.map */
