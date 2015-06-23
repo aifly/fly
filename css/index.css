@@ -41,22 +41,145 @@ html {
   src: url("../fonts/fzxjl.ttf") format("truetype");
 }
 body {
-  background: -webkit-gradient(linear, 0 100%, 100% 0, from(#275f25), to(#439741));
   overflow: hidden;
+}
+body .bg {
+  background: url(../images/bg.jpg) no-repeat center;
+  background-size: cover;
+  -webkit-filter: blur(56px);
+  -webkit-transition: 12s;
+  transition: 12s;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
 }
 #fly-nav {
   width: 200px;
   height: 200px;
   position: absolute;
   left: 0;
-  top: 0;
-  border: 1px solid #ccc;
+  bottom: 0;
   z-index: 2;
-  opacity: 0;
   border-radius: 50%;
+  text-align: center;
+  /*&:hover ul li{
+            &:nth-of-type(1){
+                   opacity:1;
+                .transform(rotate(-90deg));
+                a{
+                     .transform(rotate(90deg));
+                }
+            }
+             &:nth-of-type(2){
+                  opacity:1;
+                .transform(rotate(-18deg));
+                  a{
+                     .transform(rotate(18deg));
+                }
+            }
+            &:nth-of-type(3){
+                 opacity:1;
+                .transform(rotate(54deg));
+                a{
+                     .transform(rotate(-54deg));
+                }
+            }
+            &:nth-of-type(4){
+                 opacity:1;
+                .transform(rotate(128deg));
+                a{
+                     .transform(rotate(-128deg));
+                }
+            }
+            &:nth-of-type(5){
+                 opacity:1;
+              .transform(rotate(200deg));
+              a{
+                 .transform(rotate(-200deg));
+                }
+            }
+        }*/
+}
+#fly-nav .fly-start {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  left: 50%;
+  top: 50%;
+  color: #000;
+  background: #fff;
+  font-family: fzxjl;
+  font-size: 30px;
+  border-radius: 50%;
+  margin-left: -35px;
+  margin-top: -35px;
+  padding: 10px;
+  box-shadow: 0 0 15px #222;
+  -webkit-transition: 1s;
+  transition: 1s;
+}
+#fly-nav ul {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+#fly-nav ul li {
+  position: absolute;
+  width: 100%;
+  height: 40px;
+  text-align: right;
+  top: 50%;
+  margin-top: -20px;
+  -webkit-transform: rotate(144deg);
+  transform: rotate(144deg);
+  -webkit-transition: 500ms;
+  transition: 500ms;
+  opacity: 0;
+}
+#fly-nav ul li a {
+  color: #fff;
+  font-family: fzxjl;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+  background: #ff6a00;
+  -webkit-transform: rotate(-144deg);
+  transform: rotate(-144deg);
+  -webkit-transition: -webkit-transform 500ms;
+  transition: transform 500ms;
+  text-align: center;
+  font-size: 20px;
+}
+#fly-nav ul li:nth-of-type(2) {
+  -webkit-transform: rotate(216deg);
+  transform: rotate(216deg);
+  -webkit-transition: 800ms 100ms;
+  transition: 800ms 100ms;
+}
+#fly-nav ul li:nth-of-type(3) {
+  -webkit-transform: rotate(288deg);
+  transform: rotate(288deg);
+  -webkit-transition: 800ms 200ms;
+  transition: 800ms 200ms;
+}
+#fly-nav ul li:nth-of-type(4) {
+  -webkit-transform: rotate(360deg);
+  transform: rotate(360deg);
+  -webkit-transition: 800ms 300ms;
+  transition: 800ms 300ms;
+}
+#fly-nav ul li:nth-of-type(5) {
+  -webkit-transform: rotate(432deg);
+  transform: rotate(432deg);
+  -webkit-transition: 800ms 400ms;
+  transition: 800ms 400ms;
 }
 #main .fly-header {
-  font-weight: bold;
   font-family: fzxjl;
   font-size: 40px;
   color: #000;

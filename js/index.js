@@ -271,6 +271,11 @@ angular.element(document).ready(function () {
         w.ltTween = Tween;
     }(window);
 
+    var img = new Image();
+    img.onload = function () {
+        $(".bg").css("-webkit-filter", "blur(0)");
+    };
+    img.src = "images/bg.jpg";
 });
 
 model.run(["$rootScope", "$location", function ($rootScope, $location) {
@@ -298,6 +303,7 @@ model.directive("flyHeaderTitle", ["$timeout", function ($timeout) {
     return {
         restrict: "A",
         link: function (scope, element, attr) {
+           
             var transitionend = "onwebkittransitionend" in window ? "webkitTransitionEnd" : "transitionend";
             var html = "";
             var arr = $(element).html().trim().split("");
@@ -326,7 +332,6 @@ model.directive("flyHeaderTitle", ["$timeout", function ($timeout) {
 
             var aSpanWidth = aSpan.width(), aSpanHeight = aSpan.height();
 
-
             $(document).on("mousemove", function (e) {
                 if (ableMove) {
                     var x = e.clientX, y = e.clientY;
@@ -349,4 +354,29 @@ model.directive("flyHeaderTitle", ["$timeout", function ($timeout) {
             })
         }
     }
-}])
+}]).directive("flyStartBtn", [function () {
+    return {
+        restrict: "A",
+        link: function (scope, element, attr) {
+            var flyNav = $("#fly-nav li");
+            var len = flyNav.size();
+            $(element).on("click", function () {
+                var _arguments = arguments;
+                _arguments.callee.open = !_arguments.callee.open;
+                flyNav.each(function (i) {
+                    var _this = $(this);
+                    if (_arguments.callee.open) {
+                        var startAng = -90;
+                        _this.css({ opacity: 1, "-webkit-transition-delay": i * 100 + "ms", "transition-delay": i * 100 + "ms", "-webkit-transform": "rotate(" + (i * 72 + startAng) + "deg)", "transform": "rotate(" + (i * 72 + startAng) + "deg)" }).find("a").css({ "-webkit-transform": "rotate(" + (-(i * 72 + startAng)) + "deg)", "transform": "rotate(" + (-(i * 72 + startAng)) + "deg)" });
+                        $(element).css({ background: "rgba(51, 51, 51, 0.9)", color: "#fff", "box-shadow": " 0 0 10px #f1f1f1" });
+                    }
+                    else {
+                        _this.css({ opacity: 0, "-webkit-transition-delay": (len - i) * 100 + "ms", "transition-delay": (len - i) * 100 + "ms", "-webkit-transform": "rotate(" + ((i + 1) * 144) + "deg)", "transform": "rotate(" + ((i + 1) * 144) + "deg)" }).find("a").css({ "-webkit-transform": "rotate(144deg)", "transform": "rotate(144deg)" });
+                        $(element).css({ background: "rgba(255, 255, 255, 0.9)", color: "#000", "box-shadow": "0 0 15px #222222" });
+                    }
+                });
+              
+            });
+        }
+    }
+}]);
