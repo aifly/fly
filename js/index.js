@@ -274,8 +274,12 @@ angular.element(document).ready(function () {
     var img = new Image();
     img.onload = function () {
         $(".bg").css("-webkit-filter", "blur(0)");
+        
     };
     img.src = "images/bg.jpg";
+
+    applicationCache && flyUtil.clearCache(applicationCache);
+
 });
 
 model.run(["$rootScope", "$location", function ($rootScope, $location) {
