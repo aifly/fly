@@ -31,112 +31,255 @@ model.controller("myCtrl", ["$scope", "$location", function ($scope, $location) 
 
     $scope.$location = $location;
 }]);
+model.provider("flyService", function () {
+    return {
+        $get: function () {
+            return {
+                canvasEffect: function () {
+                    var canvas = document.getElementById("logo");
+                    var context = canvas.getContext("2d");
+                    canvas.width = document.documentElement.clientWidth;
+                    canvas.height = document.documentElement.clientHeight;
+                    var w = canvas.width, h = canvas.height;
+
+                    imgLoader("images/logo.png", loaded);
+                    var defaultPos = [];
+                    var lastPos = [];
+                    var m = Math;
+                    function loaded(img, undefined) {
+                        var imgW = img.width, imgH = img.height;
+                        var pixX = 80, pixY = 40;
+                        var oneW = imgW / pixX, oneH = imgH / pixY;
+                        var left = 200, top = 20;
+                        if (typeof Worker === undefined) {
+                            alert("你的浏览器不支持webworker,请用最新的chrome浏览器");
+                            return;
+                        }
+                        var worker = new Worker("js/worker/savedefaultpos.js");
+                        worker.postMessage({ pixX: pixX, pixY: pixY, oneW: oneW, oneH: oneH, left: left, top: top });
+                        worker.onmessage = function (e) {
+                            defaultPos = angular.copy(e.data);
+                            for (var i = 0; i < defaultPos.length; i++) {
+                                context.save();
+                                // context.scale(m.sin(m.random() * m.PI), m.sin(m.random() *m.PI));
+                                var endX = w * m.sin(m.random() * m.PI), endY = h * 1 * m.sin(m.random() * m.PI);
+                                context.drawImage(img, defaultPos[i].sx, defaultPos[i].sy, defaultPos[i].sw, defaultPos[i].sh, endX, endY, defaultPos[i].ew, defaultPos[i].eh);
+                                context.restore();
+                                context.globalAlpha = 0;
+                                lastPos.push({ x: endX, y: endY });
+                            }
+
+                            worker.terminate();
+                        }
+
+                        var bStop = false;
+                        canvas.onclick = function (e) {
+                            if (!bStop) {
+                                arguments.callee.open = !arguments.callee.open;
+                                bStop = true;
+                                if (arguments.callee.open) {
+                                    startMove(lastPos, defaultPos, 2000, "easeBothStrong");
+                                }
+                                else {
+                                    startMove(defaultPos, lastPos, 2000, "easeBothStrong", null, "open");
+                                }
+                            }
+                        }
+                        setTimeout(function () {
+                            canvas.click();
+                        }, 1000);
+
+                        var timer = null;
+
+                        function startMove(sourceArr, targetArr, times, fx, fn, type) {
+                            var len = lastPos.length;
+
+                            var startTime = now();
+                            //window.cancelNextAnimationFrame(timer);
+                            timer = window.requestNextAnimationFrame(move);
+                            context.fillStyle = "#f00";
+
+                            function move() {
+                                context.clearRect(0, 0, w, h);
+                                var changeTime = now();
+
+                                var scale = 1 - Math.max(0, startTime - changeTime + times) / times;
+                                context.globalAlpha = type === "open" ? (1 - scale) : scale;
+                                var i = 0
+
+                                for (; i < len; i++) {
+                                    var valueX = ltTween[fx](scale * times, parseFloat(sourceArr[i]["x"]), parseFloat(targetArr[i]["x"]) - parseFloat(sourceArr[i]["x"]), times);
+                                    var valueY = ltTween[fx](scale * times, parseFloat(sourceArr[i]["y"]), parseFloat(targetArr[i]["y"]) - parseFloat(sourceArr[i]["y"]), times);
+                                    context.drawImage(img, defaultPos[i].sx, defaultPos[i].sy, defaultPos[i].sw, defaultPos[i].sh, valueX, valueY, defaultPos[i].ew, defaultPos[i].eh);
+                                }
+
+                                if (scale === 1) {
+                                    window.cancelNextAnimationFrame(timer);
+                                    bStop = false;
+                                    fn && fn();
+                                }
+                                else {
+                                    timer = window.requestNextAnimationFrame(move);
+                                }
+                            }
+                            function now() {
+                                return (new Date()).getTime();
+                            }
+
+                        }
+                    }
+                    function imgLoader(src, fn) {
+                        var img = new Image();
+                        img.onload = function () {
+                            fn && fn(this);
+                        }
+                        img.src = src;
+                    }
+                },
+                textEffect: function ($text) {
+                    var transitionend = "onwebkittransitionend" in window ? "webkitTransitionEnd" : "transitionend";
+                    var html = "";
+                    var arr = $text.html().trim().split("");
+                    angular.forEach(arr, function (item) {
+                        html += "<span>" + item + "</span>";
+                    });
+                    $text.html(html).css("opacity", 1);
+                    var aSpan = $text.find("span");
+                    var m = Math, width = document.documentElement.clientWidth, height = document.documentElement.clientHeight;
+
+                    aSpan.each(function (i, item) {
+                        $(this).css("transform", "translate3d(" + (m.random() - .5) * width * (m.random() - .5 > 0 ? 2 : -2) + "px," + (m.random() - .5) * height * (m.random() - .5 > 0 ? 2 : -2) + "px,0)").css("transition-delay", 100 * i + "ms");
+                    });
+                    var ableMove = false;
+                    $(function () {
+                        setTimeout(function () {
+                            aSpan.each(function (i, item) {
+                                $(this).css("transform", "none").css("opacity", 1);
+                            });
+                            aSpan.eq(-1).off(transitionend).on(transitionend, function () {
+                                aSpan.css("transition", "none");
+                                ableMove = true;
+                            });
+                        }, 3000);
+                    });
+
+                    var aSpanWidth = aSpan.width(), aSpanHeight = aSpan.height();
+
+                    $(document).on("mousemove", function (e) {
+                        if (ableMove) {
+                            var x = e.clientX, y = e.clientY;
+
+                            angular.forEach(aSpan, function (item) {
+                                var disX = m.pow(($(item).offset().left + aSpanWidth / 2 - x), 2),
+                                  disY = m.pow(($(item).offset().top + aSpanHeight / 2 - y), 2);
+                                var dis = m.sqrt(disX + disY);
+                                if (dis < 200) {
+                                    $(item).css("transform", "translate3d(0," + (dis - 200) + "px,0)");
+                                }
+                                else {
+                                    $(item).css("transform", "none");
+                                }
+
+                            });
+                        }
+
+                    })
+                },
+                transitionEnd: function () {
+                    var transitionend = "onwebkittransitionend" in window ? "webkitTransitionEnd" : "transitionend";
+                    return transitionend;
+                }
+            }
+        }
+    }
+});
+model.run(["$rootScope", "flyService", function ($rootScope, flyService) {
+    if (!applicationCache) {
+        return;
+    }
+    var loading = $(".fly-loading");
+    var appCache = window.applicationCache;
+    flyUtil.clearCache(appCache);
+    var img = new Image();
+    img.src = "images/bg1.jpg";
+    var img1 = new Image();
+    img1.src = "images/bg2.jpg";
+
+    
+    var i = 0;
+    var oBg = $(".bg");
+    setInterval(function () {
+        oBg.css({ opacity: 0 }).eq(i).css({opacity:1});
+        i++;
+        if (i > 2) {
+            i = 0;
+        }
+    }, 6000);
+    //$(".bg").css({ "-webkit-animation": "bgchange 10s linear infinite", "animation": "bgchange 30s linear infinite" });
+    appCache.addEventListener("noupdate", function () {
+        //不需要更新缓存
+        loading.find(".fly-progress").width("100%")
+        loading.find(".prec").html("100%");
+        setTimeout(function () {
+            loading.hide();
+            $(".bg").css("-webkit-filter", "blur(0)");
+            flyService.canvasEffect();
+            flyService.textEffect($(".fly-header-title"));
+        }, 1000);
+       
+        document.title = "大前端,小分享";
+    })
+    appCache.addEventListener("checking", function (e) {
+        //开始缓存
+        loading.show();
+        //document.title = "checking...";
+    });
+    appCache.addEventListener("downloading", function (e) {
+        document.title = "开始下载...";
+    });
+
+    appCache.addEventListener("progress", function (e) {
+        //在清单文件下载过程中周期性触发
+        var scale = e.loaded / e.total;
+        loading.find(".fly-progress").width(parseInt(scale) * 100 + "%")
+        loading.find(".prec").html(parseInt(scale) * 100 + "%");
+
+    });
+    appCache.addEventListener("cached", function (e) {
+        //下载完毕及缓存成功
+       
+        document.title = "下载完成";
+        setTimeout(function () {
+            loading.hide();
+            document.title = "大前端,小分享";
+            $(".bg").css("-webkit-filter", "blur(0)");
+            flyService.canvasEffect();
+            flyService.textEffect($(".fly-header-title"));
+        }, 1020);
+    });
+    appCache.addEventListener("obsolete", function (e) {
+        //未找到缓存清单.
+         
+    });
+
+    appCache.addEventListener("error", function (e) {
+        
+        /*
+         * 若要达到触发该事件，需要满足一下几种情况之一：
+        1、已经触发obsolete事件
+        2、manifest文件没有改变，但缓存文件中存在文件下载失败
+        3、获取manifest资源文件时发生致命错误。
+        4、当更新本地缓存时，manifest文件再次被更改。
+         */
+    })
+
+}]);
+
 angular.element(document).ready(function () {
     //angular.bootstrap(document, ["myApp"]);
 
+     
   
-    !function () {
-
-        var canvas = document.getElementById("logo");
-        var context = canvas.getContext("2d");
-        canvas.width = document.documentElement.clientWidth;
-        canvas.height = document.documentElement.clientHeight;
-        var w = canvas.width, h = canvas.height;
-
-        imgLoader("images/logo.png", loaded);
-        var defaultPos = [];
-        var lastPos = [];
-        var m = Math;
-        function loaded(img, undefined) {
-            var imgW = img.width, imgH = img.height;
-            var pixX = 80, pixY = 40;
-            var oneW = imgW / pixX, oneH = imgH / pixY;
-            var left = 200, top = 20;
-            if (typeof Worker === undefined) {
-                alert("你的浏览器不支持webworker,请用最新的chrome浏览器");
-                return;
-            }
-            var worker = new Worker("js/worker/savedefaultpos.js");
-            worker.postMessage({ pixX: pixX, pixY: pixY, oneW: oneW, oneH: oneH, left: left, top: top });
-            worker.onmessage = function (e) {
-                defaultPos = angular.copy(e.data);
-                for (var i = 0; i < defaultPos.length; i++) {
-                    context.save();
-                    // context.scale(m.sin(m.random() * m.PI), m.sin(m.random() *m.PI));
-                    var endX = w * m.sin(m.random() * m.PI), endY = h * 1 * m.sin(m.random() * m.PI);
-                    context.drawImage(img, defaultPos[i].sx, defaultPos[i].sy, defaultPos[i].sw, defaultPos[i].sh, endX, endY, defaultPos[i].ew, defaultPos[i].eh);
-                    context.restore();
-                    context.globalAlpha = 0;
-                    lastPos.push({ x: endX, y: endY });
-                }
-
-                worker.terminate();
-            }
-
-            var bStop = false;
-            canvas.onclick = function (e) {
-                if (!bStop) {
-                    arguments.callee.open = !arguments.callee.open;
-                    bStop = true;
-                    if (arguments.callee.open) {
-                        startMove(lastPos, defaultPos, 2000, "easeBothStrong");
-                    }
-                    else {
-                        startMove(defaultPos, lastPos, 2000, "easeBothStrong", null, "open");
-                    }
-                }
-            }
-            setTimeout(function () {
-                canvas.click();
-            }, 1000);
-
-            var timer = null;
-
-            function startMove(sourceArr, targetArr, times, fx, fn, type) {
-                var len = lastPos.length;
-
-                var startTime = now();
-                //window.cancelNextAnimationFrame(timer);
-                timer = window.requestNextAnimationFrame(move);
-                context.fillStyle = "#f00";
-
-                function move() {
-                    context.clearRect(0, 0, w, h);
-                    var changeTime = now();
-
-                    var scale = 1 - Math.max(0, startTime - changeTime + times) / times;
-                    context.globalAlpha = type === "open" ? (1 - scale) : scale;
-                    var i = 0
-
-                    for (; i < len; i++) {
-                        var valueX = ltTween[fx](scale * times, parseFloat(sourceArr[i]["x"]), parseFloat(targetArr[i]["x"]) - parseFloat(sourceArr[i]["x"]), times);
-                        var valueY = ltTween[fx](scale * times, parseFloat(sourceArr[i]["y"]), parseFloat(targetArr[i]["y"]) - parseFloat(sourceArr[i]["y"]), times);
-                        context.drawImage(img, defaultPos[i].sx, defaultPos[i].sy, defaultPos[i].sw, defaultPos[i].sh, valueX, valueY, defaultPos[i].ew, defaultPos[i].eh);
-                    }
-
-                    if (scale === 1) {
-                        window.cancelNextAnimationFrame(timer);
-                        bStop = false;
-                        fn && fn();
-                    }
-                    else {
-                        timer = window.requestNextAnimationFrame(move);
-                    }
-                }
-                function now() {
-                    return (new Date()).getTime();
-                }
-
-            }
-        }
-        function imgLoader(src, fn) {
-            var img = new Image();
-            img.onload = function () {
-                fn && fn(this);
-            }
-            img.src = src;
-        }
-    }();
     !function (w) {
         var Tween = {
             //t : 当前时间   b : 初始值  c : 变化值   d : 总时间  //return : 当前的位置
@@ -271,15 +414,8 @@ angular.element(document).ready(function () {
         w.ltTween = Tween;
     }(window);
 
-    var img = new Image();
-    img.onload = function () {
-        $(".bg").css("-webkit-filter", "blur(0)");
-        
-    };
-    img.src = "images/bg.jpg";
-
-    applicationCache && flyUtil.clearCache(applicationCache);
-
+   
+  
 });
 
 model.run(["$rootScope", "$location", function ($rootScope, $location) {
@@ -308,54 +444,7 @@ model.directive("flyHeaderTitle", ["$timeout", function ($timeout) {
         restrict: "A",
         link: function (scope, element, attr) {
            
-            var transitionend = "onwebkittransitionend" in window ? "webkitTransitionEnd" : "transitionend";
-            var html = "";
-            var arr = $(element).html().trim().split("");
-            angular.forEach(arr, function (item) {
-                html += "<span>" + item + "</span>";
-            });
-            $(element).html(html).css("opacity", 1);
-            var aSpan = $(element).find("span");
-            var m = Math, width = document.documentElement.clientWidth, height = document.documentElement.clientHeight;
-
-            aSpan.each(function (i, item) {
-                $(this).css("transform", "translate3d(" + (m.random() - .5) * width * (m.random() - .5 > 0 ? 2 : -2) + "px," + (m.random() - .5) * height * (m.random() - .5 > 0 ? 2 : -2) + "px,0)").css("transition-delay", 100 * i + "ms");
-            });
-            var ableMove = false;
-            $(function () {
-                $timeout(function () {
-                    aSpan.each(function (i, item) {
-                        $(this).css("transform", "none").css("opacity", 1);
-                    });
-                    aSpan.eq(-1).off(transitionend).on(transitionend, function () {
-                        aSpan.css("transition", "none");
-                        ableMove = true;
-                    });
-                }, 3000);
-            });
-
-            var aSpanWidth = aSpan.width(), aSpanHeight = aSpan.height();
-
-            $(document).on("mousemove", function (e) {
-                if (ableMove) {
-                    var x = e.clientX, y = e.clientY;
-
-                    angular.forEach(aSpan, function (item) {
-                        var disX = m.pow(($(item).offset().left + aSpanWidth / 2 - x), 2),
-                          disY = m.pow(($(item).offset().top + aSpanHeight / 2 - y), 2);
-                        var dis = m.sqrt(disX + disY);
-                        if (dis < 200) {
-                            $(item).css("transform", "translate3d(0," + (dis - 200) + "px,0)");
-                        }
-                        else {
-                            $(item).css("transform", "none");
-                        }
-
-                    });
-                }
-
-
-            })
+            
         }
     }
 }]).directive("flyStartBtn", [function () {

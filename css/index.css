@@ -43,17 +43,73 @@ html {
 body {
   overflow: hidden;
 }
-body .bg {
-  background: url(../images/bg.jpg) no-repeat center;
-  background-size: cover;
-  -webkit-filter: blur(56px);
-  -webkit-transition: 12s;
-  transition: 12s;
+body .full {
   position: absolute;
   left: 0;
   top: 0;
   right: 0;
   bottom: 0;
+}
+body .bg {
+  background: url(../images/bg1.jpg) no-repeat center;
+  background-size: cover;
+  -webkit-filter: blur(56px);
+  -webkit-transition: 4s;
+  transition: 4s;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+}
+body .bg1 {
+  background: url(../images/bg1.jpg) no-repeat center;
+  opacity: 1;
+}
+body .bg2 {
+  background: url(../images/bg2.jpg) no-repeat center;
+}
+body .bg3 {
+  background: url(../images/bg3.jpg) no-repeat center;
+}
+body .fly-loading {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9990;
+  background: rgba(0, 0, 0, 0.5);
+}
+body .fly-loading .fly-loading-bar {
+  position: absolute;
+  width: 50%;
+  left: 25%;
+  top: 50%;
+  height: 30px;
+  margin-top: -15px;
+  border: 1px solid #fff;
+  border-radius: 25px;
+  overflow: hidden;
+  text-align: center;
+  line-height: 30px;
+}
+body .fly-loading .fly-loading-bar .fly-progress {
+  width: 0;
+  margin: 0 1px;
+  position: absolute;
+  background: #f90;
+  left: 0;
+  top: 2px;
+  bottom: 2px;
+  border-radius: 15px;
+}
+body .fly-loading .fly-loading-bar .prec {
+  color: #fff;
+  position: relative;
+  font-family: Georgia;
 }
 #fly-nav {
   width: 200px;

@@ -1,10 +1,12 @@
 CACHE MANIFEST
      #AddType text/cache-manifest .appcache
-     #version 0.0.14
+     #version 0.0.24
      CACHE:
      css/index.css
      images/logo.png
-	 images/bg.jpg
+	 images/bg1.jpg
+	 images/bg2.jpg
+	 images/bg3.jpg
 	 js/angular.min.js
 	 js/jquery-1.11.0.min.js
 	 js/index.js

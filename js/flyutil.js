@@ -341,6 +341,7 @@ var flyUtil = {
         }
     },
     clearCache: function (cache) {//清除离线缓存。
+        
         cache.onupdateready = function () {
             cache.swapCache();
             location.href = location.href;
