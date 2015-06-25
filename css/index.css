@@ -41,6 +41,7 @@ html {
   src: url("../fonts/fzxjl.ttf") format("truetype");
 }
 body {
+  font-family: 微软雅黑;
   overflow: hidden;
 }
 body .full {
