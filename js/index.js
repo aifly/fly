@@ -209,24 +209,27 @@ model.run(["$rootScope", "flyService", function ($rootScope, flyService) {
     //for (var i = 1; i <= 26; i++) {
     //    var src = "http://www.xinhuatone.com/zt/m/tpmb01/images/" + i + ".jpg";
     //    arr.push(src);
-    //}    flyUtil.imgLoader(arr, function () {
-        var i = 0;
-        var oBg = $(".bg");
-        $(".bg").css("-webkit-filter", "blur(0)");
-        flyService.canvasEffect();
-        flyService.textEffect($(".fly-header-title"));
-        loading.remove();
-        setInterval(function () {
-            oBg.css({ opacity: 0 }).eq(i).css({ opacity: 1, background: "url(" + arr[i] + ") no-repeat center center", backgroundSize: "cover" });
-            i++;
-            if (i > 2) {
-                i = 0;
-            }
-        }, 6000);
-    }, function (scale) {
-        var value = parseInt(scale * 100) + "%";
-        progress.width(value);
-        prec.html(value)
+    //}   
+    $(function () {
+        flyUtil.imgLoader(arr, function () {
+            var i = 0;
+            var oBg = $(".bg");
+            $(".bg").css("-webkit-filter", "blur(0)");
+            flyService.canvasEffect();
+            flyService.textEffect($(".fly-header-title"));
+            loading.remove();
+            setInterval(function () {
+                oBg.css({ opacity: 0 }).eq(i).css({ opacity: 1, background: "url(" + arr[i] + ") no-repeat center center", backgroundSize: "cover" });
+                i++;
+                if (i > 2) {
+                    i = 0;
+                }
+            }, 6000);
+        }, function (scale) {
+            var value = parseInt(scale * 100) + "%";
+            progress.width(value);
+            prec.html(value)
+        });
     });
 
     
