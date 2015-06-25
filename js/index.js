@@ -206,9 +206,9 @@ model.run(["$rootScope", "flyService", function ($rootScope, flyService) {
     flyUtil.clearCache(appCache);
 
     var arr = ["images/bg1.jpg", "images/bg2.jpg", "images/bg3.jpg","images/logo.png"];
-        flyUtil.styleOnload("css/index.css", function () {
-        init();
-    });    function init() {
+        //flyUtil.styleOnload("css/index.css", function () {
+        
+    //});    init();    function init() {
         flyUtil.imgLoader(arr, function () {
             var i = 0;
             var oBg = $(".bg");
