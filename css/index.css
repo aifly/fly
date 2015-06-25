@@ -51,7 +51,6 @@ body .full {
   bottom: 0;
 }
 body .bg {
-  background: url(../images/bg1.jpg) no-repeat center;
   background-size: cover;
   -webkit-filter: blur(56px);
   -webkit-transition: 4s;
@@ -65,16 +64,16 @@ body .bg {
 }
 body .bg1 {
   background: url(../images/bg1.jpg) no-repeat center;
+  background-size: cover;
   opacity: 1;
 }
 body .bg2 {
-  background: url(../images/bg2.jpg) no-repeat center;
+  background-size: cover;
 }
 body .bg3 {
-  background: url(../images/bg3.jpg) no-repeat center;
+  background-size: cover;
 }
 body .fly-loading {
-  display: none;
   position: absolute;
   left: 0;
   top: 0;

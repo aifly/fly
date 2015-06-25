@@ -197,81 +197,96 @@ model.run(["$rootScope", "flyService", function ($rootScope, flyService) {
     if (!applicationCache) {
         return;
     }
-    var loading = $(".fly-loading");
+    var loading = $(".fly-loading"),
+        progress = $(".fly-loading .fly-progress"),
+        prec =  $(".fly-loading .prec");
+
+
     var appCache = window.applicationCache;
     flyUtil.clearCache(appCache);
-    var img = new Image();
-    img.src = "images/bg1.jpg";
-    var img1 = new Image();
-    img1.src = "images/bg2.jpg";
+
+    var arr = ["images/bg1.jpg", "images/bg2.jpg", "images/bg3.jpg","logo.png"];
+    //for (var i = 1; i <= 26; i++) {
+    //    var src = "http://www.xinhuatone.com/zt/m/tpmb01/images/" + i + ".jpg";
+    //    arr.push(src);
+    //}    flyUtil.imgLoader(arr, function () {
+        var i = 0;
+        var oBg = $(".bg");
+        $(".bg").css("-webkit-filter", "blur(0)");
+        flyService.canvasEffect();
+        flyService.textEffect($(".fly-header-title"));
+        loading.remove();
+        setInterval(function () {
+            oBg.css({ opacity: 0 }).eq(i).css({ opacity: 1, background: "url(" + arr[i] + ") no-repeat center center", backgroundSize: "cover" });
+            i++;
+            if (i > 2) {
+                i = 0;
+            }
+        }, 6000);
+    }, function (scale) {
+        var value = parseInt(scale * 100) + "%";
+        progress.width(value);
+        prec.html(value)
+    });
 
     
-    var i = 0;
-    var oBg = $(".bg");
-    setInterval(function () {
-        oBg.css({ opacity: 0 }).eq(i).css({opacity:1});
-        i++;
-        if (i > 2) {
-            i = 0;
-        }
-    }, 6000);
-    //$(".bg").css({ "-webkit-animation": "bgchange 10s linear infinite", "animation": "bgchange 30s linear infinite" });
-    appCache.addEventListener("noupdate", function () {
-        //不需要更新缓存
-        loading.find(".fly-progress").width("100%")
-        loading.find(".prec").html("100%");
-        setTimeout(function () {
-            loading.hide();
-            $(".bg").css("-webkit-filter", "blur(0)");
-            flyService.canvasEffect();
-            flyService.textEffect($(".fly-header-title"));
-        }, 1000);
+    ////$(".bg").css({ "-webkit-animation": "bgchange 10s linear infinite", "animation": "bgchange 30s linear infinite" });
+    //appCache.addEventListener("noupdate", function () {
+    //    //不需要更新缓存
+    //    loading.find(".fly-progress").width("100%")
+    //    loading.find(".prec").html("100%");
+    //    setTimeout(function () {
+    //        loading.hide();
+    //        $(".bg").css("-webkit-filter", "blur(0)");
+    //        flyService.canvasEffect();
+    //        flyService.textEffect($(".fly-header-title"));
+    //    }, 1000);
        
-        document.title = "大前端,小分享";
-    })
-    appCache.addEventListener("checking", function (e) {
-        //开始缓存
-        loading.show();
-        //document.title = "checking...";
-    });
-    appCache.addEventListener("downloading", function (e) {
-        document.title = "开始下载...";
-    });
+    //    document.title = "大前端,小分享";
+    //})
+    //appCache.addEventListener("checking", function (e) {
+    //    //开始缓存
+    //    loading.show();
+    //    //document.title = "checking...";
+    //});
+    //appCache.addEventListener("downloading", function (e) {
+    //    document.title = "开始下载...";
+    //});
 
-    appCache.addEventListener("progress", function (e) {
-        //在清单文件下载过程中周期性触发
-        var scale = e.loaded / e.total;
-        loading.find(".fly-progress").width(parseInt(scale) * 100 + "%")
-        loading.find(".prec").html(parseInt(scale) * 100 + "%");
+    //appCache.addEventListener("progress", function (e) {
+    //    //在清单文件下载过程中周期性触发
+    //    var scale = e.loaded / e.total;
+    //    loading.find(".fly-progress").width(parseInt(scale) * 100 + "%")
+    //    loading.find(".prec").html(parseInt(scale) * 100 + "%");
 
-    });
-    appCache.addEventListener("cached", function (e) {
-        //下载完毕及缓存成功
+    //});
+    //appCache.addEventListener("cached", function (e) {
+    //    //下载完毕及缓存成功
        
-        document.title = "下载完成";
-        setTimeout(function () {
-            loading.hide();
-            document.title = "大前端,小分享";
-            $(".bg").css("-webkit-filter", "blur(0)");
-            flyService.canvasEffect();
-            flyService.textEffect($(".fly-header-title"));
-        }, 1020);
-    });
-    appCache.addEventListener("obsolete", function (e) {
-        //未找到缓存清单.
+    //    document.title = "下载完成";
+    //    setTimeout(function () {
+    //        loading.hide();
+    //        document.title = "大前端,小分享";
+    //        $(".bg").css("-webkit-filter", "blur(0)");
+    //        flyService.canvasEffect();
+    //        flyService.textEffect($(".fly-header-title"));
+    //    }, 1020);
+    //});
+    //appCache.addEventListener("obsolete", function (e) {
+    //    //未找到缓存清单.
          
-    });
+    //});
 
-    appCache.addEventListener("error", function (e) {
+    //appCache.addEventListener("error", function (e) {
         
-        /*
-         * 若要达到触发该事件，需要满足一下几种情况之一：
-        1、已经触发obsolete事件
-        2、manifest文件没有改变，但缓存文件中存在文件下载失败
-        3、获取manifest资源文件时发生致命错误。
-        4、当更新本地缓存时，manifest文件再次被更改。
-         */
-    })
+    //    /*
+    //     * 若要达到触发该事件，需要满足一下几种情况之一：
+    //    1、已经触发obsolete事件
+    //    2、manifest文件没有改变，但缓存文件中存在文件下载失败
+    //    3、获取manifest资源文件时发生致命错误。
+    //    4、当更新本地缓存时，manifest文件再次被更改。
+    //     */
+    //})
 
 }]);
 

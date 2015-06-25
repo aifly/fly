@@ -459,38 +459,26 @@ var flyUtil = {
         var ua = window.navigator.userAgent.toLowerCase();
         return ua.match(/MicroMessenger/i) === 'micromessenger';
     },
-    imgLoader: function (arr, fn) {//图片的加载器。
+    imgLoader: function (arr, fn,callBack) {//图片的加载器。
         var len = arr.length;
         var count = 0;
         var i = 0;
-        loadimg();
-        function loadimg() {
-            if (i === len) {
-                return;
-            }
+        loader();
+        function loader() {
             var img = new Image();
-            img.onload = function () {
-                count++;
-                if (i < len - 1) {
-                    i++;
-                    loadimg();
-                };
-                if (count / len >= 1) {
+            count++;
+            img.onload = img.onerror = function () {
+                if (count < len) {
+                    loader();
+                }
+                else if (count / len === 1) {
                     fn && fn();
                 }
-            };
-            img.onerror = function () {
-                count++;
-                if (i < len - 1) {
-                    i++;
-                    loadimg();
-                };
-                if (count / len >= 1) {
-                    fn && fn();
-                }
+                callBack && callBack(count / len);
             }
-            img.src = arr[i];
-        }
+
+            img.src = arr[count - 1];
+        }
     },
     shake: function (fn, responesTime) {//手机摇一摇触发的函数
         responesTime = responesTime || 1000;//响应时间
