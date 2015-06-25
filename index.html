@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html ng-app="myApp" ng-controller="myCtrl">
+<html ng-app="myApp" manifest="index.manifest">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
@@ -8,7 +8,7 @@
     <link href="css/index.css" rel="stylesheet" id="style"  />
     <title>大前端,小分享</title>
 </head>
-<body>
+<body ng-controller="myCtrl">
     <div class="bg bg1"></div>
     <div class="bg bg2"></div>
     <div class="bg bg3"></div>
@@ -38,7 +38,7 @@
             <canvas></canvas>
         </article>-->
     </section>
-    
+
 
     <script src="js/jquery-1.11.0.min.js"></script>
     <script src="js/angular.min.js"></script>

@@ -2,15 +2,12 @@ CACHE MANIFEST
      #AddType text/cache-manifest .appcache
      #version 0.0.25
      CACHE:
-     css/index.css
      images/logo.png
 	 images/bg1.jpg
 	 images/bg2.jpg
 	 images/bg3.jpg
 	 js/angular.min.js
 	 js/jquery-1.11.0.min.js
-	 js/index.js
 	 fonts/fzxjl.ttf
-	 css/index.min.css
      NETWORK:
          *
