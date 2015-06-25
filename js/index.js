@@ -205,12 +205,10 @@ model.run(["$rootScope", "flyService", function ($rootScope, flyService) {
     var appCache = window.applicationCache;
     flyUtil.clearCache(appCache);
 
-    var arr = ["images/bg1.jpg", "images/bg2.jpg", "images/bg3.jpg","logo.png"];
-    //for (var i = 1; i <= 26; i++) {
-    //    var src = "http://www.xinhuatone.com/zt/m/tpmb01/images/" + i + ".jpg";
-    //    arr.push(src);
-    //}   
-    $(function () {
+    var arr = ["images/bg1.jpg", "images/bg2.jpg", "images/bg3.jpg","images/logo.png"];
+        flyUtil.styleOnload("css/index.css", function () {
+        init();
+    });    function init() {
         flyUtil.imgLoader(arr, function () {
             var i = 0;
             var oBg = $(".bg");
@@ -229,9 +227,7 @@ model.run(["$rootScope", "flyService", function ($rootScope, flyService) {
             var value = parseInt(scale * 100) + "%";
             progress.width(value);
             prec.html(value)
-        });
-    });
-
+        });    }    
     
     ////$(".bg").css({ "-webkit-animation": "bgchange 10s linear infinite", "animation": "bgchange 30s linear infinite" });
     //appCache.addEventListener("noupdate", function () {

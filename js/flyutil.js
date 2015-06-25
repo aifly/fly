@@ -509,6 +509,73 @@ var flyUtil = {
      ,
     isNumber: function (n) {
         return !isNaN(parseFloat(n)) && isFinite(n);
+    },
+    styleOnload: function (href, callback) {
+         
+        var node = document.createElement("link");
+        node.setAttribute("rel", "stylesheet");
+        node.setAttribute("type", "text/css");
+        node.setAttribute("href", href);
+        document.body.appendChild(node);
+        
+        function load(href, callback) {
+            // for IE6-9 and Opera
+            if (node.attachEvent) {
+                node.attachEvent('onload', callback);
+                // NOTICE:
+                // 1. "onload" will be fired in IE6-9 when the file is 404, but in
+                // this situation, Opera does nothing, so fallback to timeout.
+                // 2. "onerror" doesn't fire in any browsers!
+            }
+                // polling for Firefox, Chrome, Safari
+            else {
+                setTimeout(function () {
+                    poll(node, callback);
+                }, 0); // for cache
+            }
+        }
+
+        function poll(node, callback) {
+            if (callback.isCalled) {
+                return;
+            }
+
+            var isLoaded = false;
+
+            if (/webkit/i.test(navigator.userAgent)) {//webkit
+                if (node['sheet']) {
+                    isLoaded = true;
+                }
+            }
+                // for Firefox
+            else if (node['sheet']) {
+                try {
+                    if (node['sheet'].cssRules) {
+                        isLoaded = true;
+                    }
+                } catch (ex) {
+                    // NS_ERROR_DOM_SECURITY_ERR
+                    if (ex.code === 1000) {
+                        isLoaded = true;
+                    }
+                }
+            }
+
+            if (isLoaded) {
+                // give time to render.
+                setTimeout(function () {
+                    callback();
+                }, 1);
+            }
+            else {
+                setTimeout(function () {
+                    poll(node, callback);
+                }, 1);
+            }
+        }
+
+       
+        load(href, callback);
     }
 }
     
