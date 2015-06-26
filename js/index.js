@@ -249,7 +249,7 @@ model.run(["$rootScope", "flyService", function ($rootScope, flyService) {
                 if (i !== -1) {
                     S.UI.simulate(decodeURI(action).substring(i + 3));
                 } else {
-                    S.UI.simulate('ifly|html5|css3|JS|to start|#time|#countdown 10||');
+                    S.UI.simulate('ifly|html5|css3|to start|#rectangle|#time|#countdown 10||');
                 }
 
                 S.Drawing.loop(function () {
