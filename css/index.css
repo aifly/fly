@@ -51,9 +51,21 @@ body .full {
   right: 0;
   bottom: 0;
 }
+body .canvas {
+  z-index: 100;
+  background: #79a8ae;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-transition: -webkit-transform 900ms;
+  transition: transform 900ms;
+  -webkit-transition-timing-function: cubic-bezier(1, -0.025, 1, 0.865);
+  transition-timing-function: cubic-bezier(1, -0.025, 1, 0.865);
+}
 body .bg {
   background-size: cover;
-  -webkit-filter: blur(56px);
   -webkit-transition: 4s;
   transition: 4s;
   position: absolute;
@@ -64,7 +76,6 @@ body .bg {
   opacity: 0;
 }
 body .bg1 {
-  background: url(../images/bg1.jpg) no-repeat center;
   background-size: cover;
   opacity: 1;
 }
