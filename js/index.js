@@ -249,7 +249,7 @@ model.run(["$rootScope", "flyService", function ($rootScope, flyService) {
                 if (i !== -1) {
                     S.UI.simulate(decodeURI(action).substring(i + 3));
                 } else {
-                    S.UI.simulate('ifly|html5|css3|to start|#rectangle|#time|#countdown 9||');
+                    S.UI.simulate('ifly|html5|css3|to start|#rectangle|#time|#countdown 10||');
                 }
 
                 S.Drawing.loop(function () {
@@ -383,32 +383,34 @@ model.run(["$rootScope", "flyService", function ($rootScope, flyService) {
 
                             timedAction(function (index) {
                                 if (index === 0) {
-                                    canvasTextDone = true;
-                                    if (imgLoadingDone) {
-                                        var transitionEnd = "onwebkittransitionend" in window ? "webkitTransitionEnd" : "transitionend";
-                                        $(".canvas").css({ "-webkit-transform": "translate3d(0,-100%,0)", "transform": "translate3d(0,-100%,0)" }).off(transitionEnd).on(transitionEnd, function () {
-                                            $(this).remove();
-                                        });
-                                        flyService.canvasEffect();
-                                        flyService.textEffect($(".fly-header-title"));
-                                        var oBg = $(".bg");
-                                        var i = 0;
-                                        setInterval(function () {
-                                            oBg.css({ opacity: 0 }).eq(i).css({ opacity: 1, background: "url(" + arr[i] + ") no-repeat center center", backgroundSize: "cover" });
-                                            i++;
-                                            if (i > 2) {
-                                                i = 0;
-                                            }
-                                        }, 6000);
-                                    }
+                                    var oBg = $(".bg");
+                                    oBg.eq(0).css({ opacity: 1, background: "url(images/bg1.jpg) no-repeat center center", backgroundSize: "cover" });
+                                    setTimeout(function () {
+                                        canvasTextDone = true;
+                                        if (imgLoadingDone) {
+                                            var transitionEnd = "onwebkittransitionend" in window ? "webkitTransitionEnd" : "transitionend";
+                                            $(".canvas").css({ "-webkit-transform": "translate3d(0,-100%,0)", "transform": "translate3d(0,-100%,0)" }).off(transitionEnd).on(transitionEnd, function () {
+                                                $(this).remove();
+                                            });
+                                            flyService.canvasEffect();
+                                            flyService.textEffect($(".fly-header-title"));
+
+                                            var i = 0;
+                                            setInterval(function () {
+                                                oBg.css({ opacity: 0 }).eq(i).css({ opacity: 1, background: "url(" + arr[i] + ") no-repeat center center", backgroundSize: "cover" });
+                                                i++;
+                                                if (i > 2) {
+                                                    i = 0;
+                                                }
+                                            }, 6000);
+                                        }
+                                    },500);
                                     if (sequence.length === 0) {
                                         S.Shape.switchShape(S.ShapeBuilder.letter(''));
                                     } else {
                                         performAction(sequence);
                                     }
                                   
-                                }else if(index === 2){
-                                    $(".bg").eq(0).css({ opacity: 1, background: "url(images/bg1.jpg) no-repeat center center", backgroundSize: "cover" });
                                 } else {
                                     S.Shape.switchShape(S.ShapeBuilder.letter(index), true);
                                 }
