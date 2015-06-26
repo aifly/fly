@@ -1,6 +1,6 @@
 CACHE MANIFEST
      #AddType text/cache-manifest .appcache
-     #version 0.0.25
+     #version 0.0.26
      CACHE:
      images/logo.png
 	 images/bg1.jpg
