@@ -35,107 +35,6 @@ model.provider("flyService", function () {
     return {
         $get: function () {
             return {
-                canvasEffect: function () {
-                    var canvas = document.getElementById("logo");
-                    var context = canvas.getContext("2d");
-                    canvas.width = document.documentElement.clientWidth;
-                    canvas.height = document.documentElement.clientHeight;
-                    var w = canvas.width, h = canvas.height;
-
-                    imgLoader("images/logo.png", loaded);
-                    var defaultPos = [];
-                    var lastPos = [];
-                    var m = Math;
-                    function loaded(img, undefined) {
-                        var imgW = img.width, imgH = img.height;
-                        var pixX = 80, pixY = 40;
-                        var oneW = imgW / pixX, oneH = imgH / pixY;
-                        var left = 200, top = 20;
-                        if (typeof Worker === undefined) {
-                            alert("你的浏览器不支持webworker,请用最新的chrome浏览器");
-                            return;
-                        }
-                        var worker = new Worker("js/worker/savedefaultpos.js");
-                        worker.postMessage({ pixX: pixX, pixY: pixY, oneW: oneW, oneH: oneH, left: left, top: top });
-                        worker.onmessage = function (e) {
-                            defaultPos = angular.copy(e.data);
-                            for (var i = 0; i < defaultPos.length; i++) {
-                                context.save();
-                                // context.scale(m.sin(m.random() * m.PI), m.sin(m.random() *m.PI));
-                                var endX = w * m.sin(m.random() * m.PI), endY = h * 1 * m.sin(m.random() * m.PI);
-                                context.drawImage(img, defaultPos[i].sx, defaultPos[i].sy, defaultPos[i].sw, defaultPos[i].sh, endX, endY, defaultPos[i].ew, defaultPos[i].eh);
-                                context.restore();
-                                context.globalAlpha = 0;
-                                lastPos.push({ x: endX, y: endY });
-                            }
-
-                            worker.terminate();
-                        }
-
-                        var bStop = false;
-                        canvas.onclick = function (e) {
-                            if (!bStop) {
-                                arguments.callee.open = !arguments.callee.open;
-                                bStop = true;
-                                if (arguments.callee.open) {
-                                    startMove(lastPos, defaultPos, 2000, "easeBothStrong");
-                                }
-                                else {
-                                    startMove(defaultPos, lastPos, 2000, "easeBothStrong", null, "open");
-                                }
-                            }
-                        }
-                        setTimeout(function () {
-                            canvas.click();
-                        }, 1000);
-
-                        var timer = null;
-
-                        function startMove(sourceArr, targetArr, times, fx, fn, type) {
-                            var len = lastPos.length;
-
-                            var startTime = now();
-                            //window.cancelNextAnimationFrame(timer);
-                            timer = window.requestNextAnimationFrame(move);
-                            context.fillStyle = "#f00";
-
-                            function move() {
-                                context.clearRect(0, 0, w, h);
-                                var changeTime = now();
-
-                                var scale = 1 - Math.max(0, startTime - changeTime + times) / times;
-                                context.globalAlpha = type === "open" ? (1 - scale) : scale;
-                                var i = 0
-
-                                for (; i < len; i++) {
-                                    var valueX = ltTween[fx](scale * times, parseFloat(sourceArr[i]["x"]), parseFloat(targetArr[i]["x"]) - parseFloat(sourceArr[i]["x"]), times);
-                                    var valueY = ltTween[fx](scale * times, parseFloat(sourceArr[i]["y"]), parseFloat(targetArr[i]["y"]) - parseFloat(sourceArr[i]["y"]), times);
-                                    context.drawImage(img, defaultPos[i].sx, defaultPos[i].sy, defaultPos[i].sw, defaultPos[i].sh, valueX, valueY, defaultPos[i].ew, defaultPos[i].eh);
-                                }
-
-                                if (scale === 1) {
-                                    window.cancelNextAnimationFrame(timer);
-                                    bStop = false;
-                                    fn && fn();
-                                }
-                                else {
-                                    timer = window.requestNextAnimationFrame(move);
-                                }
-                            }
-                            function now() {
-                                return (new Date()).getTime();
-                            }
-
-                        }
-                    }
-                    function imgLoader(src, fn) {
-                        var img = new Image();
-                        img.onload = function () {
-                            fn && fn(this);
-                        }
-                        img.src = src;
-                    }
-                },
                 textEffect: function ($text) {
                     var transitionend = "onwebkittransitionend" in window ? "webkitTransitionEnd" : "transitionend";
                     var html = "";
@@ -216,7 +115,7 @@ model.run(["$rootScope", "flyService", function ($rootScope, flyService) {
             if (canvasTextDone) {
                 var i = 0;
                 var oBg = $(".bg");
-                flyService.canvasEffect();
+               // flyService.canvasEffect();
                 flyService.textEffect($(".fly-header-title"));
                 loading.remove();
                 setInterval(function () {
@@ -237,6 +136,8 @@ model.run(["$rootScope", "flyService", function ($rootScope, flyService) {
             //progress.width(value);
             //prec.html(value)
         });
+
+        flyUtil.loadImgByCanvas("images/logo.png",$("#logo")[0],0,0);
 
         var S = {
             init: function () {
@@ -392,7 +293,7 @@ model.run(["$rootScope", "flyService", function ($rootScope, flyService) {
                                             $(".canvas").css({ "-webkit-transform": "translate3d(0,-100%,0)", "transform": "translate3d(0,-100%,0)" }).off(transitionEnd).on(transitionEnd, function () {
                                                 $(this).remove();
                                             });
-                                            flyService.canvasEffect();
+                                           // flyService.canvasEffect();
                                             flyService.textEffect($(".fly-header-title"));
 
                                             var i = 0;
