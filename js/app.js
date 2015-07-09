@@ -10,7 +10,6 @@
 requirejs(["jquery", "flyUtil", "angular"], function ($, flyUtil) {
     'use strict';
     var flyHeader = $("#fly-header");
-    
     if (navigator.appName === "Microsoft Internet Explorer" || navigator.userAgent.toLowerCase().indexOf("rv:11.0")>-1) {
        
     }
