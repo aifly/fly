@@ -7,7 +7,7 @@
     urlArgs: "bust=" + (new Date()).getTime()//防止读取缓存，调试用
 });
 
-requirejs(["jquery", "flyUtil", "angular"], function ($, flyUtil) {
+requirejs(["jquery", "flyutil", "angular"], function ($, flyUtil) {
     'use strict';
     var flyHeader = $("#fly-header");
     if (navigator.appName === "Microsoft Internet Explorer" || navigator.userAgent.toLowerCase().indexOf("rv:11.0")>-1) {
