@@ -1,49 +1,30 @@
 ﻿<!DOCTYPE html>
-<html ng-app="myApp" manifest="index.manifest">
+<html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-    <meta name="keywords" content="爱前端,爱生活,ifly,关注前端.留住精彩" />
-    <meta name="author" content="fly" />
-    <link href="css/index.css" rel="stylesheet" id="style"  />
-    <title>大前端,小分享</title>
+    <title>fly blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+    <meta name="keywords" content="爱生活,爱前端,ifly,html5,css3"/>
+    <meta name="author" content="fly"/>
+    <meta name="description" content="fly的前端技术博客,涉及内容html5,css3,js等"/>
+    <link href="css/index.min.css" rel="stylesheet" />
 </head>
-<body ng-controller="myCtrl">
-    <canvas class="canvas"></canvas>
-    <div class="bg bg1"></div>
-    <div class="bg bg2"></div>
-    <div class="bg bg3"></div>
-    <!--<div class="fly-loading">
-        <div class="fly-loading-bar"><span class="fly-progress"></span><span class="prec">0%</span></div>
-    </div>-->
-    <nav id="fly-nav">
-        <ul>
-            <li><a href="javascript:void(0)">首页</a></li>
-            <li><a href="javascript:void(0)">资讯</a></li>
-            <li><a href="javascript:void(0)">html5</a></li>
-            <li><a href="javascript:void(0)">css3</a></li>
-            <li><a href="javascript:void(0)">js</a></li>
-        </ul>
-        <a href="javascript:void(0)" class="fly-start" fly-start-btn>Start</a>
-    </nav>
-    <section id="main">
-        <header class="fly-header">
-            <div>
-                <canvas id="logo"></canvas>
-            </div>
-            <article class="fly-header-title" fly-header-title>
-                爱生活,爱前端,ifly,关注前端.留住精彩
-            </article>
+<body ng-controller="flyBlogController">
+    <section>
+        <header class="fly-header" id="fly-header">
+            <aside class="fly-logo"><img src="images/logo.png" alt="fly-logo" /></aside>
+            <nav class="fly-header-nav">
+                <ul>
+                    <li class="fly-nav-item"><a href="javascript:void(0)">首页</a></li>
+                    <li class="fly-nav-item"><a href="javascript:void(0)">关于我</a></li>
+                    <li class="fly-nav-item"><a href="javascript:void(0)">慢生活</a></li>
+                    <li class="fly-nav-item"><a href="javascript:void(0)">碎言碎语</a></li>
+                    <li class="fly-nav-item"><a href="javascript:void(0)">技术分享</a></li>
+                    <li class="fly-nav-item"><a href="javascript:void(0)">留言版</a></li>
+                </ul>
+            </nav>
         </header>
-        <!--<article class="snow" id="snow" snow>
-            <canvas></canvas>
-        </article>-->
     </section>
+    <script src="js/require.js" data-main="js/app.min"></script>
 
-
-    <script src="js/jquery-1.11.0.min.js"></script>
-    <script src="js/angular.min.js"></script>
-    <script src="js/flyutil.min.js"></script>
-    <script src="js/index.js"></script>
 </body>
 </html>
