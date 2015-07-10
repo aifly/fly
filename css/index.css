@@ -152,6 +152,11 @@ body {
 .fly-header .fly-header-nav ul li a:hover {
   color: #f90;
   margin-top: 5px;
+  font-weight: bold;
+}
+.fly-header .fly-header-nav ul li .active {
+  color: #f90;
+  font-weight: bold;
 }
 .fly-header .fly-header-nav ul li:last-of-type {
   background: none;

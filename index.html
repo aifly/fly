@@ -17,12 +17,12 @@
             </aside>
             <nav class="fly-header-nav">
                 <ul>
-                    <li class="fly-nav-item"><a href="javascript:void(0)" ng-click="$location.path('index')">首页</a></li>
-                    <li class="fly-nav-item"><a href="javascript:void(0)" ng-click="$location.path('aboutme')">关于我</a></li>
-                    <li class="fly-nav-item"><a href="javascript:void(0)" ng-click="$location.path('slowlive')">慢生活</a></li>
-                    <li class="fly-nav-item"><a href="javascript:void(0)" ng-click="$location.path('somewords')">碎言碎语</a></li>
-                    <li class="fly-nav-item"><a href="javascript:void(0)" ng-click="$location.path('share')">技术分享</a></li>
-                    <li class="fly-nav-item"><a href="javascript:void(0)" ng-click="$location.path('message')">留言版</a></li>
+                    <li class="fly-nav-item"><a href="javascript:void(0)" ng-class="{true:'active',false:''}[$location.path()==='/index']" ng-click="$location.path('index')">首页</a></li>
+                    <li class="fly-nav-item"><a href="javascript:void(0)" ng-class="{true:'active',false:''}[$location.path()==='/aboutme']" ng-click="$location.path('aboutme')">关于我</a></li>
+                    <li class="fly-nav-item"><a href="javascript:void(0)" ng-class="{true:'active',false:''}[$location.path()==='/slowlive']" ng-click="$location.path('slowlive')">慢生活</a></li>
+                    <li class="fly-nav-item"><a href="javascript:void(0)" ng-class="{true:'active',false:''}[$location.path()==='/somewords']" ng-click="$location.path('somewords')">碎言碎语</a></li>
+                    <li class="fly-nav-item"><a href="javascript:void(0)" ng-class="{true:'active',false:''}[$location.path()==='/share']" ng-click="$location.path('share')">技术分享</a></li>
+                    <li class="fly-nav-item"><a href="javascript:void(0)" ng-class="{true:'active',false:''}[$location.path()==='/message']" ng-click="$location.path('message')">留言版</a></li>
                 </ul>
             </nav>
         </header>
