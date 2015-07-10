@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>fly blog</title>
+    <title>fly blogs</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
     <meta name="keywords" content="爱生活,爱前端,ifly,html5,css3"/>
     <meta name="author" content="fly"/>
@@ -10,21 +10,26 @@
 </head>
 <body ng-controller="flyBlogController">
     <section>
+        <div class="fly-scanlines"></div>
         <header class="fly-header" id="fly-header">
-            <aside class="fly-logo"><img src="images/logo.png" alt="fly-logo" /></aside>
+            <aside class="fly-logo">
+                <div class="fly-author">fly--徐畅 <span></span><span></span><span></span><span></span></div>
+            </aside>
             <nav class="fly-header-nav">
                 <ul>
-                    <li class="fly-nav-item"><a href="javascript:void(0)">首页</a></li>
-                    <li class="fly-nav-item"><a href="javascript:void(0)">关于我</a></li>
-                    <li class="fly-nav-item"><a href="javascript:void(0)">慢生活</a></li>
-                    <li class="fly-nav-item"><a href="javascript:void(0)">碎言碎语</a></li>
-                    <li class="fly-nav-item"><a href="javascript:void(0)">技术分享</a></li>
-                    <li class="fly-nav-item"><a href="javascript:void(0)">留言版</a></li>
+                    <li class="fly-nav-item"><a href="javascript:void(0)" ng-click="$location.path('index')">首页</a></li>
+                    <li class="fly-nav-item"><a href="javascript:void(0)" ng-click="$location.path('aboutme')">关于我</a></li>
+                    <li class="fly-nav-item"><a href="javascript:void(0)" ng-click="$location.path('slowlive')">慢生活</a></li>
+                    <li class="fly-nav-item"><a href="javascript:void(0)" ng-click="$location.path('somewords')">碎言碎语</a></li>
+                    <li class="fly-nav-item"><a href="javascript:void(0)" ng-click="$location.path('share')">技术分享</a></li>
+                    <li class="fly-nav-item"><a href="javascript:void(0)" ng-click="$location.path('message')">留言版</a></li>
                 </ul>
             </nav>
         </header>
+        <div id="fly-content" ng-view>
+            
+        </div>
     </section>
-    <script src="js/require.js" data-main="js/app.min"></script>
-
+    <script src="js/require.js" data-main="js/app"></script>
 </body>
 </html>

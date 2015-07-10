@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style>
+        *{margin:0;padding:0;}
+        h1{
+            margin:200px;
+            font-size:50px;
+            position:absolute;
+        }
+        h1:before{
+            content:attr(data-text);
+            position:absolute;
+            color:red;
+            left:-10px;
+        }
+    </style>
+</head>
+<body>
+    <h1 data-text="你">
+        你
+    </h1>
+</body>
+</html>
