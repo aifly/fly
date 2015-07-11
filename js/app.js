@@ -68,8 +68,8 @@ requirejs(["jquery", "flyutil", "angular","context"], function ($, flyUtil) {
                         var disX = m.pow(($(item).offset().left + aSpanWidth / 2 - x), 2),
                           disY = m.pow(($(item).offset().top + aSpanHeight / 2 - y), 2);
                         var dis = m.sqrt(disX + disY);
-                        if (dis < 100) {
-                            $(item).css("transform", "translate3d(0," + (dis - 100) + "px,0)");
+                        if (dis < 60) {
+                            $(item).css("transform", "translate3d(0," + (dis - 60) + "px,0)");
                         }
                         else {
                             $(item).css("transform", "none");
