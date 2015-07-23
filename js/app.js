@@ -17,7 +17,7 @@ requirejs(["jquery", "flyutil", "angular","context"], function ($, flyUtil) {
     else {
         $.get("fonts/fzxjl.ttf", {}, function (data, status) {
             if (status === "success") {
-                $(".fly-nav-item a", flyHeader).css({ fontSize: 24, fontFamily: "fzxjl" });
+                $("body").css({ fontSize: 24, fontFamily: "fzxjl" });
             }
         });
     }
