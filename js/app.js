@@ -15,6 +15,11 @@ requirejs(["jquery", "flyutil", "angular","context"], function ($, flyUtil) {
 
     }
     else {
+
+        $("body").css({ fontFamily: "fzxjl" });
+        $(".fly-center p span").css({ fontSize: 24 })
+        $(".fly-nav-item a", flyHeader).css({ fontSize: 24, fontFamily: "fzxjl" });
+
         $.get("fonts/fzxjl.ttf", {}, function (data, status) {
             if (status === "success") {
                 $("body").css({ fontFamily: "fzxjl" });
@@ -57,7 +62,7 @@ requirejs(["jquery", "flyutil", "angular","context"], function ($, flyUtil) {
                     flyAbout.find("li").each(function (i) {
                         $(this).css({ transform: "none", opacity: 1, transitionDelay: i * 300 + "ms" });
                     });
-                },1000);
+                },400);
                 
             }
             else if ($location.path() === "/share") {
