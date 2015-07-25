@@ -1,4 +1,4 @@
-﻿html,
+html,
 body,
 div,
 p,
@@ -266,6 +266,12 @@ body {
   -webkit-transform: translate3d(0, -2000px, 0);
   transform: translate3d(0, -2000px, 0);
 }
+#welcome {
+  left: 50%;
+  margin-left: -320px;
+  position: absolute;
+  top: 20px;
+}
 @media all and (max-width: 1366px) and (max-height: 768px) {
   .fly-container {
     width: 1200px;
@@ -274,4 +280,3 @@ body {
     width: 960px;
   }
 }
-/*# sourceMappingURL=index.css.map */

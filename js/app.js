@@ -17,7 +17,9 @@ requirejs(["jquery", "flyutil", "angular","context"], function ($, flyUtil) {
     else {
         $.get("fonts/fzxjl.ttf", {}, function (data, status) {
             if (status === "success") {
-                $("body").css({ fontSize: 24, fontFamily: "fzxjl" });
+                $("body").css({ fontFamily: "fzxjl" });
+                $(".fly-center p span").css({fontSize:24})
+                $(".fly-nav-item a", flyHeader).css({ fontSize: 24, fontFamily: "fzxjl" });
             }
         });
     }
@@ -50,6 +52,15 @@ requirejs(["jquery", "flyutil", "angular","context"], function ($, flyUtil) {
     flyBlogApp.run(["$rootScope","$location", function ($rootScope,$location) {
         $rootScope.$on("$viewContentLoaded", function () {
             if ($location.path() === "/index") {
+                var canvas = $("#welcome canvas").show()[0];
+                var context = canvas.getContext("2d");
+                var video = $("video")[0];
+                clearInterval(window.timer);
+                window.timer = setInterval(function () {
+                    context.drawImage(video, 0, -140);
+                }, 20);
+
+
                 var $text = $("#fly-content .fly-index .fly-center p");
                 var arr = $text.html().trim().split("");
                 var html = "";
@@ -79,6 +90,8 @@ requirejs(["jquery", "flyutil", "angular","context"], function ($, flyUtil) {
                 })
             } else {
                 $(document).off("mousemove");
+                clearInterval(window.timer);
+                $("#welcome").hide();
             }
         });
     }]);
@@ -121,7 +134,7 @@ requirejs(["jquery", "flyutil", "angular","context"], function ($, flyUtil) {
                 });
 
                 $("#fly-container").height(document.documentElement.clientHeight - flyHeader.height());
-
+                
             }
         }
     }]);
