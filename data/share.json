@@ -1,0 +1,6 @@
+﻿[
+    {
+        "title": "<a href='javascript:void(0)'>本网站的基础架构模式</a>",
+        "content": "本网站是一个基于当前流行的前端框架<code>angularjs</code>，用AMD规范的模块化框架<a href='http://www.requirejs.cn/' target='_blank'><code>requirejs</code></a>异步加载模块的SPA(单页应用)."
+    }
+]

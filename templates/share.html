@@ -1,3 +1,11 @@
 ﻿<section class="fly-share">
-    技术分享
+    <div class="container">
+        <ul>
+            <li ng-repeat="data in shareData">
+                <h1 ng-bind-html="data.title"></h1>
+                <p ng-bind-html="data.content"></p>
+            </li>
+            <li class="text-center h2" style="color:#fff;">未完待续.....</li>
+        </ul>
+    </div>
 </section>

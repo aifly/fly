@@ -24,33 +24,54 @@ requirejs(["jquery", "flyutil", "angular","context"], function ($, flyUtil) {
         });
     }
    
-  
-
-    var flyBlogApp = angular.module("flyBlogApp", ["ngRoute","ngAnimate"]);
+    var flyBlogApp = angular.module("flyBlogApp", ["ngRoute", "ngAnimate", "ngResource", "ngSanitize"]);
 
     flyBlogApp.config(["$routeProvider", function ($routProvider) {
         $routProvider.when("/index", {
-            templateUrl: "templates/index.html?t="+new Date().getTime()
+            templateUrl: "templates/index.html?"
         }).when("/aboutme", {
-            templateUrl: "templates/aboutme.html?t=" + new Date().getTime()
+            templateUrl: "templates/aboutme.html"
         }).when("/slowlive", {
-            templateUrl: "templates/slowlive.html?t=" + new Date().getTime()
+            templateUrl: "templates/slowlive.html"
         }).when("/somewords", {
-            templateUrl: "templates/somewords.html?t=" + new Date().getTime()
+            templateUrl: "templates/somewords.html"
         }).when("/share", {
-            templateUrl: "templates/share.html?t=" + new Date().getTime()
+            templateUrl: "templates/share.html"
         }).when("/message", {
-            templateUrl: "templates/message.html?t=" + new Date().getTime()
+            templateUrl: "templates/message.html"
         }).otherwise({
             redirectTo: "/index"
         });
     }]);
 
-    flyBlogApp.controller("flyBlogController", ["$scope","$location", function ($scope,$location) {
+    flyBlogApp.controller("flyBlogController", ["$scope", "$location", "$resource", function ($scope, $location, $resource) {
         $scope.$location = $location;
+        
     }]);
-    flyBlogApp.run(["$rootScope","$location", function ($rootScope,$location) {
+    flyBlogApp.run(["$rootScope", "$location", "$resource",  function ($rootScope, $location, $resource) {
+       
         $rootScope.$on("$viewContentLoaded", function () {
+
+            if ($location.path() === "/aboutme") {//关于我
+                var flyAbout = $("#fly-content .fly-about");
+                setTimeout(function () {
+                    flyAbout.find("li").each(function (i) {
+                        $(this).css({ transform: "none", opacity: 1, transitionDelay: i * 300 + "ms" });
+                    });
+                },1000);
+                
+            }
+            else if ($location.path() === "/share") {
+                if ($rootScope.shareData) {
+                    return;
+                }
+                var shareData = $resource("data/share.json").query(function () {
+
+                });
+                $rootScope.shareData = shareData;
+            }
+
+
             if ($location.path() === "/index") {
                 var canvas = $("#welcome canvas").show()[0];
                 var context = canvas.getContext("2d");
@@ -93,6 +114,10 @@ requirejs(["jquery", "flyutil", "angular","context"], function ($, flyUtil) {
                 clearInterval(window.timer);
                 $("#welcome").hide();
             }
+
+         
+
+
         });
     }]);
     flyBlogApp.provider("flyBlogService", function () {//自定义服务
