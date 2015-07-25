@@ -1,4 +1,4 @@
-html,
+﻿html,
 body,
 div,
 p,
@@ -47,7 +47,7 @@ img {
   src: url("../fonts/fzxjl.ttf") format("truetype");
 }
 body {
-  font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+  font-family: "微软雅黑";
   background: url(../images/1.jpg) no-repeat center center;
   background-size: cover;
   overflow: hidden;
@@ -316,3 +316,4 @@ body {
     width: 960px;
   }
 }
+/*# sourceMappingURL=index.css.map */
