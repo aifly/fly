@@ -1,4 +1,4 @@
-﻿html,
+html,
 body,
 div,
 p,
@@ -276,9 +276,8 @@ body {
 }
 .fly-container .fly-content .fly-share > .container > ul p {
   text-indent: 2em;
-  font-size: 16px;
+  font-size: 20px;
   color: #ff0;
-  font-family: "微软雅黑";
 }
 .fly-container .fly-content .fly-somewords {
   background: rgba(114, 114, 114, 0.5);
@@ -316,4 +315,3 @@ body {
     width: 960px;
   }
 }
-/*# sourceMappingURL=index.css.map */
