@@ -1,4 +1,4 @@
-html,
+﻿html,
 body,
 div,
 p,
@@ -279,11 +279,16 @@ body {
   font-size: 20px;
   color: #ff0;
 }
-.fly-container .fly-content .fly-somewords {
-  background: rgba(114, 114, 114, 0.5);
+.fly-container .fly-content .fly-somewords h2 {
+  color: #fff;
 }
-.fly-container .fly-content .fly-message {
-  background: rgba(238, 238, 238, 0.3);
+.fly-container .fly-content .fly-somewords p {
+  text-indent: 2em;
+  font-size: 24px;
+  color: #fff;
+}
+.fly-container .fly-content .fly-somewords p:last-of-type {
+  padding-bottom: 30px;
 }
 .fly-container .fly-content.ng-enter {
   -webkit-transform: translate3d(0, 2000px, 0);
@@ -315,3 +320,4 @@ body {
     width: 960px;
   }
 }
+/*# sourceMappingURL=index.css.map */

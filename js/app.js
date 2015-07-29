@@ -54,8 +54,15 @@ requirejs(["jquery", "flyutil", "angular","context"], function ($, flyUtil) {
         
     }]);
     flyBlogApp.run(["$rootScope", "$location", "$resource",  function ($rootScope, $location, $resource) {
-        applicationCache && flyUtil.clearCache(applicationCache);
+        applicationCache && flyUtil.clearCache(window.applicationCache);
+
+       
+
         $rootScope.$on("$viewContentLoaded", function () {
+            requirejs(["iscroll"], function (iscroll) {
+                // 
+                iscroll("fly-someword");
+            })
             if ($location.path() === "/aboutme") {//关于我
                 var flyAbout = $("#fly-content .fly-about");
                 setTimeout(function () {

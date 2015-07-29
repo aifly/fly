@@ -1,6 +1,6 @@
 CACHE MANIFEST
      #AddType text/cache-manifest .appcache
-     #version 0.0.30
+     #version 0.1.12
      CACHE:
 	 js/angular.min.js
 	 js/jquery-1.11.0.min.js

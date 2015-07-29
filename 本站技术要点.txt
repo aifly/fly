@@ -1,0 +1,6 @@
+﻿一.网站整体架构-- - requirejs + angularjs + jquery
+  用angular 的bootstrap方法手动启动整个页面.
+requirejs异步加载js模块.angularjs --ngRoute(路由模块) - ngAnimate (动画模块)--ngSanitize(解析html模块)--ngResource(用来请求json文件和$http服务类似) 插件.
+jquery 主要用来做dom操作.
+
+二.强大的编辑器.(vs2013) gulp的使用. css3 特殊字体. html5离线缓存.canvas ...

@@ -342,11 +342,12 @@
             }
         },
         clearCache: function (cache) {//清除离线缓存。
-
-            cache.onupdateready = function () {
+            cache.addEventListener("updateready", function () {
+                alert(123)
                 cache.swapCache();
                 location.href = location.href;
-            }
+            });
+
         },
         getStyle: function (obj, attr) {//得到css文件里面定义的样式属性值
             return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj, false)[attr];
