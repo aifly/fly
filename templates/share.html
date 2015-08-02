@@ -1,11 +1,17 @@
 ﻿<section class="fly-share">
-    <div class="container">
+    <div class ="container">
         <ul>
             <li ng-repeat="data in shareData">
                 <h1 ng-bind-html="data.title"></h1>
                 <p ng-bind-html="data.content"></p>
             </li>
-            <li class="text-center h2" style="color:#fff;">未完待续.....</li>
         </ul>
+        <div class="fly-video-container">
+            <section class="fly-video">
+                <video controls src="../videos/site.mp4" width="100%" height="100%"></video>
+                <p>网站架构</p>
+            </section>
+        </div>
+        <div class="text-center h2" style="color:#fff;">未完待续.....</div>
     </div>
 </section>

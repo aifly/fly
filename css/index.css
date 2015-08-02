@@ -1,4 +1,4 @@
-﻿html,
+html,
 body,
 div,
 p,
@@ -279,6 +279,18 @@ body {
   font-size: 20px;
   color: #ff0;
 }
+.fly-container .fly-content .fly-share .fly-video-container {
+  width: 1000px;
+  margin: 0 auto;
+}
+.fly-container .fly-content .fly-share .fly-video-container .fly-video {
+  width: 25%;
+}
+.fly-container .fly-content .fly-share .fly-video-container .fly-video p {
+  font-family: 微软雅黑;
+  color: #fff;
+  text-align: center;
+}
 .fly-container .fly-content .fly-somewords h2 {
   color: #fff;
 }
@@ -320,4 +332,3 @@ body {
     width: 960px;
   }
 }
-/*# sourceMappingURL=index.css.map */
