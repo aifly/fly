@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <video hidden src="../videos/welcome.mp4" width="700"  autoplay muted></video>
+    <canvas id="canvas" width="700" height="200" ></canvas>
+    <script>
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext("2d");
+        var video = document.getElementsByTagName("video")[0];
+        var timer = null;
+        video.oncanplay = function () {
+           timer = setInterval(function () {
+                context.drawImage(video, 0, -140);
+            },1000/60);
+        }
+
+        video.onended = function () {
+            clearInterval(timer)
+        }
+
+    </script>
+</body>
+</html>

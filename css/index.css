@@ -1,4 +1,4 @@
-html,
+﻿html,
 body,
 div,
 p,
@@ -281,10 +281,13 @@ body {
 }
 .fly-container .fly-content .fly-share .fly-video-container {
   width: 1000px;
+  height: 200px;
   margin: 0 auto;
 }
 .fly-container .fly-content .fly-share .fly-video-container .fly-video {
-  width: 25%;
+  float: left;
+  margin: 10px;
+  width: 24%;
 }
 .fly-container .fly-content .fly-share .fly-video-container .fly-video p {
   font-family: 微软雅黑;
@@ -332,3 +335,4 @@ body {
     width: 960px;
   }
 }
+/*# sourceMappingURL=index.css.map */
