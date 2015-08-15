@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>基于html5刮奖示例</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+    <meta name="" />
+    <style type="text/css">
+        canvas {
+            position: absolute;
+        }
+
+        p {
+            text-align: center;
+            position: absolute;
+            top: 40%;
+            z-index: 0;
+            left: 35%;
+            font-size: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div style="width:400px;height:400px;position:relative;background:#f99">
+        <p>一等奖</p>
+        <canvas id='canvas' width="400" height="400"></canvas>
+    </div>
+    <script type="text/javascript">
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext("2d");
+        context.fillStyle = "green";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.globalCompositeOperation = "destination-out";
+        canvas.onmousedown = function (e) {
+            var disX = canvas.offsetLeft;
+            var disY = canvas.offsetTop;
+            document.onmousemove = function (e) {
+                var x = e.clientX - disX;
+                var y = e.clientY - disY;
+                context.beginPath();
+                context.arc(x, y, 20, 0, 2 * Math.PI, false);
+                context.closePath();
+                context.fill();
+            };
+            document.onmouseup = function () {
+                document.onmousemove = null;
+                document.onmouseup = null;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-﻿html,
+html,
 body,
 div,
 p,
@@ -263,7 +263,19 @@ body {
   color: #abcdef;
 }
 .fly-container .fly-content .fly-live {
-  background: rgba(121, 121, 121, 0.8);
+  font-family: '宋体';
+  color: #fff;
+}
+.fly-container .fly-content .fly-live .live-container {
+  margin: 100px auto;
+}
+.fly-container .fly-content .fly-live .live-container h2 {
+  font-size: 20px;
+}
+.fly-container .fly-content .fly-live .live-container ul li a {
+  color: #000;
+  font-size: 16px;
+  text-decoration: underline;
 }
 .fly-container .fly-content .fly-share > .container > ul {
   width: 90%;
@@ -335,4 +347,3 @@ body {
     width: 960px;
   }
 }
-/*# sourceMappingURL=index.css.map */
