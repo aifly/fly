@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>仿google浏览器标题栏的loading特效</title>
+</head>
+<body>
+	<canvas id="canvas" width="500" height="500" style="border:1px solid red;"></canvas>
+	<script type="text/javascript">
+		var canvas = document.getElementById("canvas");
+		var context = canvas.getContext("2d");
+		var ang = 0;
+		var i=1;
+		var x=canvas.width>>1,y=canvas.height>>1,r=50;
+		setInterval(function(){
+			context.clearRect(0,0,canvas.width,canvas.height);
+			ang +=5;
+			if (ang>=360) {
+				ang = 0;
+				i++;
+			};
+
+			if (i%2===0) {
+			flyRotate({
+					color1:"#fff",
+					color2:"#abcdef",
+					fill:true
+				});
+
+			}else{
+				flyRotate({
+					color1:"#abcdef",
+					color2:"#fff",
+					fill:false
+				})
+			}
+		},20);
+
+	function flyRotate(option){
+			context.lineWidth=6; 
+			
+			context.beginPath();
+			context.arc(x,y,r,0,2*Math.PI,false);
+			context.closePath();
+			context.strokeStyle=option.color1;
+			context.stroke();
+
+			context.lineWidth=7;
+			context.save();
+			context.beginPath();
+			context.translate(x,y);
+			context.rotate((ang/180)*Math.PI);
+			context.lineTo(0,0);
+			context.arc(0,0,r,0,ang/180*Math.PI,false);
+
+			context.closePath();
+			context.strokeStyle=option.color2;
+ 
+			context.stroke();
+			if (option.fill) {
+				context.beginPath();
+				context.arc(0,0,r-3,0,2*Math.PI,false);
+				context.closePath();
+				context.fillStyle=option.color1;
+				context.fill();
+			};
+			context.restore();
+	}
+	</script>
+</body>
+</html>
